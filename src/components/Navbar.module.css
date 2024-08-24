@@ -1,0 +1,120 @@
+/* src/components/Navbar.module.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #1976d2; /* Matching the blue color from your design */
+  position: relative;
+}
+
+.logo a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.navLinks {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navLinks li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.navLinks li a:hover {
+  text-decoration: underline;
+}
+
+.loginButton {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 5px;
+  color: white;
+  text-decoration: none;
+}
+
+.loginButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.signUpButton {
+  padding: 0.5rem 1rem;
+  background-color: #ff5722; /* Matching the red color from your design */
+  border-radius: 5px;
+  color: white;
+  text-decoration: none;
+}
+
+.signUpButton:hover {
+  background-color: #e64a19;
+}
+
+/* Responsive Styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 9999; /* Ensures the hamburger menu is above other content */
+}
+
+.bar {
+  height: 3px;
+  width: 100%;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.navLinks {
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .navLinks {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #1976d2;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    transform: translateX(100%);
+  }
+
+  .navOpen {
+    transform: translateX(0%);
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .barOpen:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .barOpen:nth-child(2) {
+    opacity: 0;
+  }
+
+  .barOpen:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  .logo {
+    z-index: 9999; /* Keeps the logo on top of the open menu */
+  }
+}
