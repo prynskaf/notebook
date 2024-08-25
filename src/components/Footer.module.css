@@ -1,0 +1,24 @@
+/* src/components/Footer.module.css */
+
+.footer {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #1f2937;
+  color: white;
+  /* border-radius: 8px; */
+}
+
+.footer p {
+  margin-bottom: 20px;
+}
+
+.socialLinks {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.socialLinks img {
+  width: 30px;
+  height: 30px;
+}

@@ -1,36 +1,57 @@
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+"use client";
+import React, { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 import useNotesStore from "@/store/useStore";
-import styles from "./CreateNoteForm.module.css";
+import styles from "@/styles/EditNoteForm.module.css";
 import { toast } from "sonner";
 
-const CreateNoteForm: React.FC = () => {
+const EditNoteForm: React.FC = () => {
+  const { id } = useParams();
+  const router = useRouter();
+  const { notes, fetchNotes, editNote } = useNotesStore();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [codeSample, setCodeSample] = useState(""); // Make sure codeSample is defined
+  const [codeSample, setCodeSample] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { addNote } = useNotesStore();
-  const router = useRouter();
+  useEffect(() => {
+    // Fetch notes if not already fetched
+    if (notes.length === 0) {
+      fetchNotes();
+    }
+  }, [fetchNotes, notes.length]);
+
+  useEffect(() => {
+    if (id && notes.length > 0) {
+      const noteToEdit = notes.find((note) => note._id === id); // Make sure to use _id if that's what you have
+      if (noteToEdit) {
+        setTitle(noteToEdit.title);
+        setContent(noteToEdit.content);
+        setCodeSample(noteToEdit.codeSample);
+      } else {
+        console.error("Note not found");
+        router.push("/notes");
+      }
+    }
+  }, [id, notes, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     const loadingToastId = toast.loading("Creating...");
 
     try {
-      await addNote({
+      await editNote(id, {
         title,
         content,
-        codeSample, // Now this should be accepted without type error
-        createdAt: new Date().toISOString(),
+        codeSample,
       });
-      router.push("/notes");
       toast.dismiss(loadingToastId);
       toast.success("Post was successfully posted");
+      router.push("/notes");
     } catch (error) {
-      console.error("Error creating note:", error);
+      console.error("Error updating note:", error);
       toast.dismiss(loadingToastId);
       toast.error("An error occurred while posting.");
     } finally {
@@ -40,7 +61,7 @@ const CreateNoteForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className={styles.formContainer}>
-      <h1>Create a New Note</h1>
+      <h1>Edit Note</h1>
       <p>Update your coding insights, tips, and snippets</p>
       <div className={styles.formGroup}>
         <label htmlFor="title">Title:</label>
@@ -71,7 +92,7 @@ const CreateNoteForm: React.FC = () => {
       </div>
       <div className={styles.buttons}>
         <button type="submit" className={styles.saveButton} disabled={loading}>
-          {loading ? "Saving..." : "Save Note"}
+          {loading ? "Saving..." : "Save Changes"}
         </button>
         <button
           type="button"
@@ -85,4 +106,4 @@ const CreateNoteForm: React.FC = () => {
   );
 };
 
-export default CreateNoteForm;
+export default EditNoteForm;

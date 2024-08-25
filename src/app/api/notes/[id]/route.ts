@@ -8,14 +8,16 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const { userId } = getAuth(request);
-  if (!userId)
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   await dbConnect();
 
   const note = await Note.findById(params.id);
-  if (!note)
+  if (!note) {
     return NextResponse.json({ error: "Note not found" }, { status: 404 });
+  }
 
   return NextResponse.json(note, { status: 200 });
 }
@@ -25,10 +27,18 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const { userId } = getAuth(request);
-  if (!userId)
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const { title, content, codeSample } = await request.json();
+
+  if (!title || !content) {
+    return NextResponse.json(
+      { error: "Title and content are required" },
+      { status: 400 }
+    );
+  }
 
   await dbConnect();
 
@@ -38,8 +48,9 @@ export async function PUT(
     { new: true }
   );
 
-  if (!note)
+  if (!note) {
     return NextResponse.json({ error: "Note not found" }, { status: 404 });
+  }
 
   return NextResponse.json(note, { status: 200 });
 }
@@ -49,14 +60,17 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   const { userId } = getAuth(request);
-  if (!userId)
+  if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   await dbConnect();
 
   const note = await Note.findByIdAndDelete(params.id);
-  if (!note)
+  if (!note) {
     return NextResponse.json({ error: "Note not found" }, { status: 404 });
+  }
 
-  return NextResponse.json({}, { status: 204 });
+  // Return a 204 status code with no content
+  return new NextResponse(null, { status: 204 });
 }

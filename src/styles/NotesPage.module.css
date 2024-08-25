@@ -1,0 +1,160 @@
+/* src/app/notes/NotesPage.module.css */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.header p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.addNoteButton {
+  padding: 15px 30px;
+  background-color: #ef4444;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.addNoteButton:hover {
+  background-color: #dc2626;
+}
+
+.recentNotes {
+  margin-top: 40px;
+}
+
+.recentNotes h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.notesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.noteCard {
+  padding: 20px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.noteCard h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.noteCard p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.noteFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.noteFooter span {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.viewButton {
+  padding: 8px 15px;
+  background-color: #3b82f6;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.viewButton:hover {
+  background-color: #2563eb;
+}
+
+.viewAllNotesButton {
+  display: block;
+  margin: 40px auto 0;
+  padding: 15px 30px;
+  background-color: #ef4444;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  max-width: 200px;
+}
+
+.viewAllNotesButton:hover {
+  background-color: #dc2626;
+}
+
+/* Responsive Styles */
+
+/* Small screens (mobile) */
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .header p {
+    font-size: 1rem;
+  }
+
+  .addNoteButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+
+  .recentNotes h2 {
+    font-size: 1.5rem;
+  }
+
+  .noteCard h3 {
+    font-size: 1.2rem;
+  }
+
+  .noteCard p {
+    font-size: 0.9rem;
+  }
+
+  .viewButton {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .viewAllNotesButton {
+    padding: 10px 20px;
+    width: 100%;
+    font-size: 1rem;
+    max-width: 350px;
+  }
+
+  .addNoteButton {
+    width: 100%;
+    max-width: 350px;
+  }
+}

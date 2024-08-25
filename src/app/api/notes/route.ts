@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
 import dbConnect from "@/libs/dbConnect";
 import Note from "@/models/Note";
+import mongoose from "mongoose";
 
 export async function GET(request: NextRequest) {
   const { userId } = getAuth(request);
@@ -23,12 +24,20 @@ export async function POST(request: NextRequest) {
 
   await dbConnect();
 
-  const note = await Note.create({
-    title,
-    content,
-    codeSample,
-    user: userId,
-  });
+  try {
+    const note = await Note.create({
+      title,
+      content,
+      codeSample,
+      user: userId, // Store userId directly as a string
+    });
 
-  return NextResponse.json(note, { status: 201 });
+    return NextResponse.json(note, { status: 201 });
+  } catch (error) {
+    console.error("Error creating note:", error);
+    return NextResponse.json(
+      { error: "Failed to create note." },
+      { status: 500 }
+    );
+  }
 }

@@ -1,11 +1,7 @@
-// src/types/index.ts
-
 export interface Note {
-    id: string;
-    title: string;
-    content: string;
-    codeSample?: string; // Optional field for code samples
-    createdAt: Date;
-    updatedAt: Date;
-  }
-  
+  _id: string;
+  title: string;
+  content: string;
+  codeSample: string; // Include codeSample here
+  createdAt: string;
+}
