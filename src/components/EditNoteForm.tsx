@@ -24,7 +24,8 @@ const EditNoteForm: React.FC = () => {
 
   useEffect(() => {
     if (id && notes.length > 0) {
-      const noteToEdit = notes.find((note) => note._id === id); // Make sure to use _id if that's what you have
+      const noteId = Array.isArray(id) ? id[0] : id;
+      const noteToEdit = notes.find((note) => note._id === noteId); // Make sure to use _id if that's what you have
       if (noteToEdit) {
         setTitle(noteToEdit.title);
         setContent(noteToEdit.content);
@@ -42,7 +43,8 @@ const EditNoteForm: React.FC = () => {
     const loadingToastId = toast.loading("Creating...");
 
     try {
-      await editNote(id, {
+      const noteId = Array.isArray(id) ? id[0] : id;
+      await editNote(noteId, {
         title,
         content,
         codeSample,
