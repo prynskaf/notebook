@@ -89,9 +89,16 @@ const Navbar = () => {
             </li>
           </>
         ) : (
-          <li>
-            <UserButton signOut={handleSignOut} />
-          </li>
+          <>
+            <li>
+              <UserButton />
+            </li>
+            <li>
+              <button onClick={handleSignOut} className={styles.logoutButton}>
+                Sign Out
+              </button>
+            </li>
+          </>
         )}
       </ul>
       <div className={styles.hamburger} onClick={toggleMenu}>
