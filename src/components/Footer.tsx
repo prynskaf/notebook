@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Footer.module.css";
 import Link from "next/link";
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -8,13 +9,13 @@ const Footer = () => {
       <p>© 2024 Code Notebook. All rights reserved.</p>
       <div className={styles.socialLinks}>
         <Link href="https://twitter.com">
-          <img src="/icons/twitter.svg" alt="Twitter" />
+          <Image src="/twitter.png" width={5} height={5} alt="Twitter" />
         </Link>
         <Link href="https://github.com">
-          <img src="/icons/github.svg" alt="GitHub" />
+          <Image src="/github.png" width={5} height={5} alt="GitHub" />
         </Link>
         <Link href="https://linkedin.com">
-          <img src="/icons/linkedin.svg" alt="LinkedIn" />
+          <Image src="/linkedin.png" width={5} height={5} alt="LinkedIn" />
         </Link>
       </div>
     </footer>
