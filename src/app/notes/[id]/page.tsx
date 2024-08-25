@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import useNotesStore from "@/store/useStore";
-import { Note } from "@/store/noteTypes";
+import useNotesStore, { Note } from "@/store/useStore";
 import styles from "@/styles/NoteView.module.css";
 
 const NoteView = () => {
@@ -13,7 +12,7 @@ const NoteView = () => {
 
   useEffect(() => {
     if (id) {
-      const fetchedNote = notes.find((note) => note._id === id);
+      const fetchedNote = notes.find((note) => note._id === id); // Using _id to fetch
 
       if (fetchedNote) {
         setNote(fetchedNote);
