@@ -36,11 +36,11 @@ async function dbConnect(): Promise<Mongoose> {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-      useNewUrlParser: true, // Ensures the new MongoDB connection string parser is used
-      useUnifiedTopology: true, // Enables the new unified topology layer
-      serverSelectionTimeoutMS: 5000, // 5 seconds timeout for server selection
-      socketTimeoutMS: 45000, // 45 seconds timeout for socket
-      maxPoolSize: 10, // Adjust based on your needs
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      maxPoolSize: 10,
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {

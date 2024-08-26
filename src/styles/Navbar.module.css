@@ -1,19 +1,35 @@
-/* src/components/Navbar.module.css */
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #1976d2; /* Matching the blue color from your design */
+  background-color: #1976d2;
   position: relative;
 }
 
-.logo a {
+.logo .logoHover {
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
   text-decoration: none;
+  transition:
+    transform 0.3s ease-in,
+    color 0.3s ease-in;
+}
+
+.logoHover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.logoHover img {
+  filter: brightness(0) invert(1);
+}
+
+.logo .logoHover:hover {
+  color: #dc2626;
 }
 
 .navLinks {
@@ -26,10 +42,13 @@
   color: white;
   text-decoration: none;
   font-size: 1rem;
-  
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease-in-out;
 }
 
 .navLinks li a:hover {
+  color: #dc2626;
   font-weight: bold;
 }
 
@@ -48,8 +67,7 @@
 
 .signUpButton {
   padding: 0.5rem 1rem;
-  background-color: #ff5722; /* Matching the red color from your design */
-  border-radius: 5px;
+  background-color: #ff5722;
   color: white;
   text-decoration: none;
 }
@@ -66,7 +84,7 @@
   width: 25px;
   height: 20px;
   cursor: pointer;
-  z-index: 9999; /* Ensures the hamburger menu is above other content */
+  z-index: 9999;
 }
 
 .logoutButton {
@@ -97,6 +115,7 @@
     justify-content: center;
     gap: 2rem;
     transform: translateX(100%);
+    z-index: 999;
   }
 
   .navOpen {
@@ -120,6 +139,6 @@
   }
 
   .logo {
-    z-index: 9999; /* Keeps the logo on top of the open menu */
+    z-index: 9999;
   }
 }

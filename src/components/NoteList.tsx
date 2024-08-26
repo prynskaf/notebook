@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import useNotesStore from "@/store/useStore";
-import styles from "./NoteList.module.css";
+import styles from "@/styles/NoteList.module.css";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { IoChevronBack } from "react-icons/io5";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const NoteList: React.FC = () => {
   const { notes, loading, fetchNotes, deleteNote } = useNotesStore();
@@ -39,7 +41,7 @@ const NoteList: React.FC = () => {
   };
 
   if (loading) {
-    return <p>Loading notes...</p>;
+    return <LoadingSpinner />;
   }
 
   return (
@@ -83,7 +85,8 @@ const NoteList: React.FC = () => {
         className={styles.backButton}
         onClick={() => router.push("/notes")}
       >
-        &larr; Back to Management Note
+        <IoChevronBack style={{ fontSize: "1.5rem" }} />
+        <span>Back to Management Note</span>
       </button>
     </div>
   );

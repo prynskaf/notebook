@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import useNotesStore from "@/store/useStore";
-import styles from "./CreateNoteForm.module.css";
+import styles from "@/styles/CreateNoteForm.module.css";
 import { toast } from "sonner";
 
 const CreateNoteForm: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [codeSample, setCodeSample] = useState(""); // Make sure codeSample is defined
+  const [codeSample, setCodeSample] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { addNote } = useNotesStore();
@@ -23,7 +23,7 @@ const CreateNoteForm: React.FC = () => {
       await addNote({
         title,
         content,
-        codeSample, // Now this should be accepted without type error
+        codeSample,
         createdAt: new Date().toISOString(),
       });
       router.push("/notes");

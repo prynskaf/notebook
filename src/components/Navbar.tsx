@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useUser, UserButton, useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import styles from "./Navbar.module.css";
+import styles from "@/styles/Navbar.module.css";
+import Image from "next/image";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,7 +20,7 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    router.push("/"); // Redirect to homepage after sign out
+    router.push("/");
   };
 
   // Function to register the user using Axios
@@ -44,7 +45,16 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        <Link href="/">Code Notebook</Link>
+        <Link className={styles.logoHover} href="/">
+          <Image
+            src="/code.png"
+            width={40}
+            height={40}
+            alt=" code logo"
+            className={styles.featuresIcon}
+          />
+          <span> Code Notebook</span>
+        </Link>
       </div>
       <ul className={`${styles.navLinks} ${menuOpen ? styles.navOpen : ""}`}>
         <li>

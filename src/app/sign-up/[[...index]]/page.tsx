@@ -1,4 +1,3 @@
-// src/app/sign-up/[[...index]]/page.tsx
 import { SignUp } from '@clerk/nextjs';
 
 export default function SignUpPage() {

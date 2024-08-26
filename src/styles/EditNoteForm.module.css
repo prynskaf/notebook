@@ -44,8 +44,9 @@
 
 .buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-top: 2rem;
+  gap: 20px;
 }
 
 .saveButton {
@@ -53,7 +54,7 @@
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  border-radius: 30px;
   cursor: pointer;
   font-size: 1rem;
 }
@@ -68,7 +69,7 @@
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  border-radius: 30px;
   cursor: pointer;
   font-size: 1rem;
 }
@@ -76,6 +77,7 @@
 @media (max-width: 600px) {
   .buttons {
     flex-direction: column;
+    gap: 5px;
   }
 
   .buttons button {

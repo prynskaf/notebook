@@ -1,9 +1,11 @@
-// src/app/notes/page.tsx
 "use client";
 import { useEffect } from "react";
 import Link from "next/link";
-import useNotesStore from "@/store/useStore"; // Adjust import to your store's location
+import useNotesStore from "@/store/useStore";
 import styles from "@/styles/NotesPage.module.css";
+import { FaPlus } from "react-icons/fa";
+import { IoIosArrowForward } from "react-icons/io";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const NotesPage = () => {
   // Fetch notes and the loading state from the Zustand store
@@ -27,21 +29,22 @@ const NotesPage = () => {
         <h1>Notes Management</h1>
         <p>Organize, edit, and view your coding notes with ease</p>
         <Link href="/notes/create" className={styles.addNoteButton}>
-          + Add New Note
+          <FaPlus />
+          <span>Add New Note</span>
         </Link>
       </header>
 
       <section className={styles.recentNotes}>
         <h2>Recent Notes</h2>
         {loading ? (
-          <p>Loading...</p>
+          <LoadingSpinner />
         ) : (
           <div className={styles.notesGrid}>
             {recentNotes.length > 0 ? (
               recentNotes.map((note) => (
                 <div key={note._id} className={styles.noteCard}>
                   <h3>{note.title}</h3>
-                  <p>{note.content}</p>
+                  <p>{note.content.substring(0, 100)}...</p>
                   <div className={styles.noteFooter}>
                     <span>{new Date(note.createdAt).toLocaleDateString()}</span>
                     <Link
@@ -59,7 +62,8 @@ const NotesPage = () => {
           </div>
         )}
         <Link href="/notes/all" className={styles.viewAllNotesButton}>
-          View All Notes &gt;
+          <span>View All Notes</span>
+          <IoIosArrowForward style={{ fontSize: "1.5rem" }} />
         </Link>
       </section>
     </div>

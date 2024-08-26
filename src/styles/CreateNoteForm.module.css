@@ -1,5 +1,3 @@
-/* src/components/CreateNoteForm.module.css */
-
 .formContainer {
   width: 100%;
   max-width: 800px;
@@ -46,8 +44,9 @@
 
 .buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-top: 20px;
+  gap: 20px;
 }
 
 .saveButton {
@@ -55,7 +54,7 @@
   background-color: #3b82f6;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 30px;
   cursor: pointer;
   font-weight: bold;
 }
@@ -69,7 +68,7 @@
   background-color: #6b7280;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 30px;
   cursor: pointer;
   font-weight: bold;
 }
@@ -84,6 +83,7 @@
 @media (max-width: 600px) {
   .buttons {
     flex-direction: column;
+    gap: 5px;
   }
 
   .buttons button {
