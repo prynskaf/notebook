@@ -20,8 +20,14 @@ const NotesPage = () => {
     fetchNotes();
   }, [fetchNotes]);
 
-  // Get only the top 3 recent notes
-  const recentNotes = notes.slice(0, 3);
+  // Sort notes by creation date in descending order and get the top 3 recent notes
+  const recentNotes = notes
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+    .slice(0, 3);
 
   return (
     <div className={styles.container}>

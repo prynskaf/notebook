@@ -44,12 +44,20 @@ const NoteList: React.FC = () => {
     return <LoadingSpinner />;
   }
 
+  // Sort notes by creation date in descending order
+  const sortedNotes = notes
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
   return (
     <div className={styles.noteListContainer}>
       <h1>All Notes</h1>
       <p>A comprehensive list of all your coding notes and snippets</p>
       <div className={styles.noteGrid}>
-        {notes.map((note) => (
+        {sortedNotes.map((note) => (
           <div key={note._id} className={styles.noteCard}>
             <h2>{note.title}</h2>
             <p>{note.content.substring(0, 100)}...</p>

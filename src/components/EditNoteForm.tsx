@@ -50,8 +50,8 @@ const EditNoteForm: React.FC = () => {
         codeSample,
       });
       toast.dismiss(loadingToastId);
-      toast.success("Post was successfully posted");
-      router.push("/notes");
+      toast.success("Note was successfully posted");
+      router.push("/notes/all");
     } catch (error) {
       console.error("Error updating note:", error);
       toast.dismiss(loadingToastId);
@@ -99,7 +99,7 @@ const EditNoteForm: React.FC = () => {
         <button
           type="button"
           className={styles.backButton}
-          onClick={() => router.push("/notes")}
+          onClick={() => router.push("/notes/all")}
         >
           Back to Notes
         </button>

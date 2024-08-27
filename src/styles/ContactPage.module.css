@@ -1,0 +1,181 @@
+.contactPage {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.companyCulture {
+  margin-bottom: 40px;
+}
+
+.companyCulture h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2rem;
+}
+
+.cultureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.cultureItem {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.cultureItem img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.cultureItem:hover {
+  transform: translateY(-10px);
+}
+
+.cultureItem p,
+.cultureItem h3 {
+  padding: 5px;
+}
+
+.cultureItem p {
+  padding: 5px;
+  margin-bottom: 20px;
+  color: rgb(80, 75, 75);
+  font-weight: normal;
+}
+
+.companyDescription {
+  display: flex;
+  flex-direction: column;
+  background-color: #2c3e50;
+  color: white;
+  padding: 40px;
+  border-radius: 8px;
+  margin-top: 80px;
+}
+
+.descriptionContent {
+  flex: 1;
+}
+
+.descriptionContent p,
+.descriptionContent h2 {
+  margin-bottom: 20px;
+}
+
+.descriptionImage {
+  flex: 1;
+  text-align: right;
+}
+
+.descriptionImage img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.contactFormSection {
+  display: flex;
+  flex-direction: column;
+  margin-top: 80px;
+  margin-bottom: 60px;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+}
+
+.contactInfo {
+  margin-bottom: 20px;
+}
+
+.contactInfo h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.contactInfo p {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  font-weight: 500;
+}
+
+.contactInfo p svg {
+  margin-right: 10px;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.formGroup textarea {
+  resize: vertical;
+}
+
+.submitButton {
+  padding: 10px 20px;
+  background-color: #ff5a5f;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in;
+}
+
+.submitButton:hover {
+  background-color: #dc2626;
+}
+
+@media (min-width: 768px) {
+  .companyDescription {
+    flex-direction: row;
+  }
+
+  .descriptionContent {
+    margin-right: 20px;
+  }
+
+  .descriptionImage {
+    margin-left: 20px;
+  }
+
+  .contactFormSection {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .contactInfo {
+    flex: 1;
+    margin-right: 20px;
+  }
+
+  .contactForm {
+    flex: 2;
+  }
+}

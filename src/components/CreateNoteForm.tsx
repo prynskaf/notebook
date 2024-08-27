@@ -28,7 +28,7 @@ const CreateNoteForm: React.FC = () => {
       });
       router.push("/notes");
       toast.dismiss(loadingToastId);
-      toast.success("Post was successfully posted");
+      toast.success("Note was successfully posted");
     } catch (error) {
       console.error("Error creating note:", error);
       toast.dismiss(loadingToastId);

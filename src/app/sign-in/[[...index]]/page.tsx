@@ -1,5 +1,11 @@
 import { SignIn } from "@clerk/nextjs";
 
 export default function SignInPage() {
-  return <SignIn routing="path" path="/sign-in" signUpUrl="/sign-up" />;
+  return (
+    <div
+      style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
+    >
+      <SignIn routing="path" path="/sign-in" />
+    </div>
+  );
 }

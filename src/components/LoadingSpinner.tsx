@@ -10,7 +10,13 @@ const LoadingSpinner = () => {
         width: "100%",
       }}
     >
-      <Image src="/loading.gif" width={50} height={50} alt="Loading..." />
+      <Image
+        src="/loading.gif"
+        width={50}
+        height={50}
+        alt="Loading..."
+        unoptimized
+      />
     </div>
   );
 };
