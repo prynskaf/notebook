@@ -6,6 +6,7 @@ import styles from "@/styles/NotesPage.module.css";
 import { FaPlus } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import TimeAgo from "react-timeago";
 
 const NotesPage = () => {
   // Fetch notes and the loading state from the Zustand store
@@ -52,7 +53,9 @@ const NotesPage = () => {
                   <h3>{note.title}</h3>
                   <p>{note.content.substring(0, 100)}...</p>
                   <div className={styles.noteFooter}>
-                    <span>{new Date(note.createdAt).toLocaleDateString()}</span>
+                    <span>
+                      <TimeAgo date={note.createdAt} />
+                    </span>
                     <Link
                       href={`/notes/${note._id}`}
                       className={styles.viewButton}

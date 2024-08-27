@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { IoChevronBack } from "react-icons/io5";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import TimeAgo from "react-timeago";
 
 const NoteList: React.FC = () => {
   const { notes, loading, fetchNotes, deleteNote } = useNotesStore();
@@ -63,7 +64,7 @@ const NoteList: React.FC = () => {
             <p>{note.content.substring(0, 100)}...</p>
             <div className={styles.flex}>
               <p className={styles.noteDate}>
-                {new Date(note.createdAt).toDateString()}
+                <TimeAgo date={note.createdAt} />
               </p>
               <div className={styles.noteActions}>
                 <button

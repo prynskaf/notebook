@@ -7,6 +7,7 @@ import { IoChevronBack } from "react-icons/io5";
 import { MdContentCopy } from "react-icons/md";
 import { toast } from "sonner";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import TimeAgo from "react-timeago";
 
 const NoteView = () => {
   const { id } = useParams();
@@ -44,7 +45,7 @@ const NoteView = () => {
             <button
               className={styles.copyButton}
               onClick={() => {
-                toast.success("code copied successfully!");
+                toast.success("Code copied successfully!");
                 navigator.clipboard.writeText(note.codeSample || "");
               }}
             >
@@ -56,12 +57,15 @@ const NoteView = () => {
           </div>
         </div>
       )}
+      <p className={styles.noteDate}>
+        <TimeAgo date={note.createdAt} />
+      </p>
       <button
         className={styles.backButton}
         onClick={() => router.push("/notes/all")}
       >
         <IoChevronBack style={{ fontSize: "1.5rem" }} />
-        <span>Back to All Note</span>
+        <span>Back to All Notes</span>
       </button>
     </div>
   );
