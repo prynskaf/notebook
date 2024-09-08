@@ -28,23 +28,27 @@
   color: #333;
 }
 
+/* Adjustments for the Monaco Editor container */
 .codeBlockContainer {
   position: relative;
   background-color: #f4f4f4;
-  padding: 20px;
+  padding: 0; /* Remove padding for Monaco Editor */
   border-radius: 8px;
-  overflow-x: auto;
+  max-height: 400px; /* Adjust based on how much space you want for the editor */
+  overflow-y: auto; /* Allow vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
+/* The Monaco Editor will handle its own font and styles */
 .codeBlock {
   font-family: "Courier New", Courier, monospace;
   font-size: 1rem;
   line-height: 1.6;
   color: #333;
   margin: 0;
-  margin-top: 20px;
 }
 
+/* Updated copyButton with cyan and light blue */
 .copyButton {
   position: absolute;
   top: 10px;
@@ -52,13 +56,13 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 1.25rem;
-  color: #0070f3;
+  font-size: 1.5rem;
+  color: #00ffff; /* Cyan color */
   z-index: 10;
 }
 
 .copyButton:hover {
-  color: #005bb5;
+  color: #00bfff; /* Light Blue on hover */
 }
 
 .backButton {
@@ -100,14 +104,9 @@
   }
 
   .copyButton {
-    position: absolute;
+    font-size: 1.25rem;
     top: 10px;
     right: 10px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 1.25rem;
-    color: #0070f3;
   }
 
   .backButton {
@@ -116,6 +115,9 @@
   }
 
   .codeBlockContainer {
-    padding: 15px;
+    padding: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 }

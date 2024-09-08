@@ -13,6 +13,7 @@
   margin-bottom: 0.5rem;
   color: #333;
 }
+
 .formContainer p {
   font-size: 1rem;
   margin-bottom: 2rem;
@@ -21,6 +22,7 @@
 
 .formGroup {
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .formGroup label {
@@ -40,6 +42,31 @@
 
 .formGroup textarea {
   min-height: 150px;
+}
+
+/* Language selection dropdown */
+.languageSelect {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Monaco Editor container */
+.monacoEditorContainer {
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 300px;
+  margin-bottom: 20px;
+}
+
+/* Adjust Monaco editor's height for smaller screens */
+@media (max-width: 600px) {
+  .monacoEditorContainer {
+    height: 200px;
+  }
 }
 
 .buttons {
@@ -78,8 +105,6 @@
 }
 
 /* Responsive Styles */
-
-/* Small screens (mobile) */
 @media (max-width: 600px) {
   .buttons {
     flex-direction: column;
