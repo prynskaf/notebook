@@ -5,6 +5,7 @@ export interface Note {
   id: string; // You can remove this if you're solely relying on _id
   _id: string;
   title: string;
+  language?: string;
   content: string;
   codeSample: string;
   createdAt: string;

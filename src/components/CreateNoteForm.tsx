@@ -48,7 +48,7 @@ const CreateNoteForm: React.FC = () => {
     }
   };
 
-  console.log("from env",process.env.NEXT_PUBLIC_TINYMCE_API_KEY);
+
 
 
   return (
