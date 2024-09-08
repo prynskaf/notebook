@@ -7,6 +7,7 @@ import { FaPlus } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import TimeAgo from "react-timeago";
+import DOMPurify from 'dompurify';
 
 const NotesPage = () => {
   // Fetch notes and the loading state from the Zustand store
@@ -50,8 +51,8 @@ const NotesPage = () => {
             {recentNotes.length > 0 ? (
               recentNotes.map((note) => (
                 <div key={note._id} className={styles.noteCard}>
-                  <h3>{note.title}</h3>
-                  <p>{note.content.substring(0, 100)}...</p>
+                  <h1 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.title) }} />
+                  <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.content.substring(0, 100)) }} />
                   <div className={styles.noteFooter}>
                     <span>
                       <TimeAgo date={note.createdAt} />

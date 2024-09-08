@@ -1,9 +1,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import useNotesStore from "@/store/useStore";
+import useNotesStore, { Note } from "@/store/useStore";
 import styles from "@/styles/EditNoteForm.module.css";
 import { toast } from "sonner";
+import dynamic from "next/dynamic";
+import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
+import LoadingSpinner from "@/components/LoadingSpinner";
+
+// Dynamically import Monaco Editor
+const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
+  ssr: false,
+});
 
 const EditNoteForm: React.FC = () => {
   const { id } = useParams();
@@ -13,6 +21,7 @@ const EditNoteForm: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [codeSample, setCodeSample] = useState("");
+  const [language, setLanguage] = useState("javascript");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -25,11 +34,12 @@ const EditNoteForm: React.FC = () => {
   useEffect(() => {
     if (id && notes.length > 0) {
       const noteId = Array.isArray(id) ? id[0] : id;
-      const noteToEdit = notes.find((note) => note._id === noteId); // Make sure to use _id if that's what you have
+      const noteToEdit = notes.find((note) => note._id === noteId);
       if (noteToEdit) {
         setTitle(noteToEdit.title);
         setContent(noteToEdit.content);
         setCodeSample(noteToEdit.codeSample);
+        setLanguage(noteToEdit.language || "javascript"); // Ensure language is set
       } else {
         console.error("Note not found");
         router.push("/notes");
@@ -40,7 +50,7 @@ const EditNoteForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const loadingToastId = toast.loading("Creating...");
+    const loadingToastId = toast.loading("Saving...");
 
     try {
       const noteId = Array.isArray(id) ? id[0] : id;
@@ -48,14 +58,15 @@ const EditNoteForm: React.FC = () => {
         title,
         content,
         codeSample,
+        language,
       });
       toast.dismiss(loadingToastId);
-      toast.success("Note was successfully posted");
+      toast.success("Note updated successfully");
       router.push("/notes/all");
     } catch (error) {
       console.error("Error updating note:", error);
       toast.dismiss(loadingToastId);
-      toast.error("An error occurred while posting.");
+      toast.error("An error occurred while updating the note.");
     } finally {
       setLoading(false);
     }
@@ -65,33 +76,80 @@ const EditNoteForm: React.FC = () => {
     <form onSubmit={handleSubmit} className={styles.formContainer}>
       <h1>Edit Note</h1>
       <p>Update your coding insights, tips, and snippets</p>
+
       <div className={styles.formGroup}>
         <label htmlFor="title">Title:</label>
-        <input
-          type="text"
-          id="title"
+        <TinyMCEEditor
+          apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
+          onEditorChange={(content) => setTitle(content)}
+          init={{
+            height: 150,
+            menubar: false,
+            plugins: "link image code",
+            toolbar:
+              "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",
+            content_style:
+              "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+          }}
         />
       </div>
+
       <div className={styles.formGroup}>
         <label htmlFor="content">Content:</label>
-        <textarea
-          id="content"
+        <TinyMCEEditor
+          apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
           value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
+          onEditorChange={(content) => setContent(content)}
+          init={{
+            height: 300,
+            menubar: false,
+            plugins: "link image code",
+            toolbar:
+              "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",
+            content_style:
+              "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+          }}
         />
       </div>
+
+      <div className={styles.formGroup}>
+        <label htmlFor="language">Code Language:</label>
+        <select
+          id="language"
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+          className={styles.languageSelect}
+        >
+          <option value="javascript">JavaScript</option>
+          <option value="typescript">TypeScript</option>
+          <option value="css">CSS</option>
+          <option value="html">HTML</option>
+          <option value="json">JSON</option>
+          <option value="javascriptreact">React (JavaScript)</option>
+          <option value="typescriptreact">React (TypeScript)</option>
+        </select>
+      </div>
+
       <div className={styles.formGroup}>
         <label htmlFor="codeSample">Code Snippet:</label>
-        <textarea
-          id="codeSample"
-          value={codeSample}
-          onChange={(e) => setCodeSample(e.target.value)}
-        />
+        <div className={styles.monacoEditorContainer}>
+          <MonacoEditor
+            height="300px"
+            language={language}
+            value={codeSample}
+            onChange={(value) => setCodeSample(value || "")}
+            theme="vs-dark"
+            options={{
+              minimap: { enabled: false },
+              lineNumbers: "on",
+              scrollBeyondLastLine: false,
+            }}
+            loading={<LoadingSpinner />}
+          />
+        </div>
       </div>
+
       <div className={styles.buttons}>
         <button type="submit" className={styles.saveButton} disabled={loading}>
           {loading ? "Saving..." : "Save Changes"}

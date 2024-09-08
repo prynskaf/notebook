@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { IoChevronBack } from "react-icons/io5";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import TimeAgo from "react-timeago";
+import DOMPurify from 'dompurify';
 
 const NoteList: React.FC = () => {
   const { notes, loading, fetchNotes, deleteNote } = useNotesStore();
@@ -60,8 +61,14 @@ const NoteList: React.FC = () => {
       <div className={styles.noteGrid}>
         {sortedNotes.map((note) => (
           <div key={note._id} className={styles.noteCard}>
-            <h2>{note.title}</h2>
-            <p>{note.content.substring(0, 100)}...</p>
+            <h2
+              className={styles.noteTitle}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.title) }}
+            />
+            <div
+              className={styles.noteContent}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.content.substring(0, 100)) }}
+            />
             <div className={styles.flex}>
               <p className={styles.noteDate}>
                 <TimeAgo date={note.createdAt} />

@@ -69,9 +69,10 @@
   transform: translateY(-10px);
 }
 
-.noteCard h3 {
+.noteCard h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
+  color: #333;
 }
 
 .noteCard p {
@@ -143,7 +144,7 @@
     font-size: 1.5rem;
   }
 
-  .noteCard h3 {
+  .noteCard h1 {
     font-size: 1.2rem;
   }
 

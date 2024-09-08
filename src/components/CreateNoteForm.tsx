@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import useNotesStore from "@/store/useStore";
@@ -5,6 +6,7 @@ import styles from "@/styles/CreateNoteForm.module.css";
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
 
 // Dynamically import Monaco Editor
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
@@ -15,7 +17,7 @@ const CreateNoteForm: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [codeSample, setCodeSample] = useState("");
-  const [language, setLanguage] = useState("javascript"); // State to manage selected language
+  const [language, setLanguage] = useState("javascript");
   const [loading, setLoading] = useState(false);
 
   const { addNote } = useNotesStore();
@@ -46,6 +48,9 @@ const CreateNoteForm: React.FC = () => {
     }
   };
 
+  console.log("from env",process.env.NEXT_PUBLIC_TINYMCE_API_KEY);
+
+
   return (
     <form onSubmit={handleSubmit} className={styles.formContainer}>
       <h1>Create a New Note</h1>
@@ -53,22 +58,37 @@ const CreateNoteForm: React.FC = () => {
 
       <div className={styles.formGroup}>
         <label htmlFor="title">Title:</label>
-        <input
-          type="text"
-          id="title"
+        <TinyMCEEditor
+          apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
+          onEditorChange={(content) => setTitle(content)}
+          init={{
+            height: 150,
+            menubar: false,
+            plugins: "link image code",
+            toolbar:
+              "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",
+            content_style:
+              "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+          }}
         />
       </div>
 
       <div className={styles.formGroup}>
         <label htmlFor="content">Content:</label>
-        <textarea
-          id="content"
+        <TinyMCEEditor
+          apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
           value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
+          onEditorChange={(content) => setContent(content)}
+          init={{
+            height: 300,
+            menubar: false,
+            plugins: "link image code",
+            toolbar:
+              "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",
+            content_style:
+              "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+          }}
         />
       </div>
 
@@ -95,7 +115,7 @@ const CreateNoteForm: React.FC = () => {
         <div className={styles.monacoEditorContainer}>
           <MonacoEditor
             height="300px"
-            language={language} // Dynamically set language
+            language={language}
             value={codeSample}
             onChange={(value) => setCodeSample(value || "")}
             theme="vs-dark"

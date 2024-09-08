@@ -8,6 +8,7 @@ import { MdContentCopy } from "react-icons/md";
 import { toast } from "sonner";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import dynamic from "next/dynamic";
+import DOMPurify from 'dompurify';
 
 // Dynamically load Monaco Editor (SSR disabled)
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
@@ -39,8 +40,14 @@ const NoteView = () => {
 
   return (
     <div className={styles.noteViewContainer}>
-      <h1 className={styles.title}>{note.title}</h1>
-      <p className={styles.content}>{note.content}</p>
+      <h1
+        className={styles.title}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.title) }}
+      />
+      <p
+        className={styles.content}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.content) }}
+      />
 
       {note.codeSample && (
         <div className={styles.codeSnippet}>
@@ -65,7 +72,6 @@ const NoteView = () => {
                 options={{ readOnly: true, minimap: { enabled: false } }}
                 loading={<LoadingSpinner />}
               />
-             
             )}
           </div>
         </div>

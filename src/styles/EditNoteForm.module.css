@@ -30,7 +30,8 @@
 }
 
 .formGroup input,
-.formGroup textarea {
+.formGroup textarea,
+.formGroup select {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ccc;
@@ -40,6 +41,16 @@
 
 .formGroup textarea {
   min-height: 150px;
+}
+
+.languageSelect {
+  background-color: #f9f9f9;
+  border-color: #ddd;
+}
+
+.languageSelect option {
+  font-size: 1rem;
+  color: #333;
 }
 
 .buttons {
