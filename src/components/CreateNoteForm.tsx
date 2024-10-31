@@ -1,6 +1,7 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs"; 
 import useNotesStore from "@/store/useStore";
 import styles from "@/styles/CreateNoteForm.module.css";
 import { toast } from "sonner";
@@ -14,6 +15,7 @@ const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
 });
 
 const CreateNoteForm: React.FC = () => {
+  const { isSignedIn } = useUser();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [codeSample, setCodeSample] = useState("");
@@ -22,6 +24,13 @@ const CreateNoteForm: React.FC = () => {
 
   const { addNote } = useNotesStore();
   const router = useRouter();
+
+  useEffect(() => {
+    // Redirect to sign-in if not authenticated
+    if (!isSignedIn) {
+      router.push("/sign-in");
+    }
+  }, [isSignedIn, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
