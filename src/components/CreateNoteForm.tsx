@@ -15,7 +15,7 @@ const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
 });
 
 const CreateNoteForm: React.FC = () => {
-  const { isSignedIn } = useUser();
+  const { isSignedIn ,isLoaded } = useUser();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [codeSample, setCodeSample] = useState("");
@@ -26,11 +26,11 @@ const CreateNoteForm: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to sign-in if not authenticated
-    if (!isSignedIn) {
+    // Only redirect if authentication status is fully loaded and user is not signed in
+    if (isLoaded && !isSignedIn) {
       router.push("/sign-in");
     }
-  }, [isSignedIn, router]);
+  }, [isLoaded, isSignedIn, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,7 +57,10 @@ const CreateNoteForm: React.FC = () => {
     }
   };
 
-
+  if (!isLoaded) {
+    // Optionally, display a loading spinner or skeleton while waiting for auth status
+    return <LoadingSpinner />;
+  }
 
 
   return (
