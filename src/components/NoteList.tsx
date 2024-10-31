@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useNotesStore from "@/store/useStore";
 import styles from "@/styles/NoteList.module.css";
 import { useRouter } from "next/navigation";
@@ -10,8 +10,9 @@ import DOMPurify from 'dompurify';
 
 const NoteList: React.FC = () => {
   const { notes, loading, fetchNotes, deleteNote } = useNotesStore();
-
   const router = useRouter();
+  const [currentPage, setCurrentPage] = useState(1);
+  const notesPerPage = 5; // Adjust this number as needed
 
   useEffect(() => {
     fetchNotes();
@@ -19,14 +20,10 @@ const NoteList: React.FC = () => {
 
   const handleViewClick = (id: string) => {
     router.push(`/notes/${id}`);
-    console.log(`View note with id: ${id}`);
-    // Implement view functionality
   };
 
   const handleEditClick = (id: string) => {
-    console.log(`Edit note with id: ${id}`);
     router.push(`/notes/edit/${id}`);
-    // Implement edit functionality
   };
 
   const handleDeleteClick = async (id: string) => {
@@ -36,17 +33,20 @@ const NoteList: React.FC = () => {
       toast.dismiss(loadingToastId);
       toast.success("Note deleted successfully!");
     } catch (error) {
-      console.error("Error deleting note:", error);
       toast.dismiss(loadingToastId);
       toast.error("An error occurred while deleting the note.");
     }
+  };
+
+  const handlePageClick = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
   };
 
   if (loading) {
     return <LoadingSpinner />;
   }
 
-  // Sort notes by creation date in descending order
+  // Sort notes by creation date before paginating
   const sortedNotes = notes
     .slice()
     .sort(
@@ -54,12 +54,20 @@ const NoteList: React.FC = () => {
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
+  // Pagination calculations on sorted notes
+  const indexOfLastNote = currentPage * notesPerPage;
+  const indexOfFirstNote = indexOfLastNote - notesPerPage;
+  const currentNotes = sortedNotes.slice(indexOfFirstNote, indexOfLastNote);
+
+  // Total number of pages
+  const totalPages = Math.ceil(notes.length / notesPerPage);
+
   return (
     <div className={styles.noteListContainer}>
       <h1>All Notes</h1>
       <p>A comprehensive list of all your coding notes and snippets</p>
       <div className={styles.noteGrid}>
-        {sortedNotes.map((note) => (
+        {currentNotes.map((note) => (
           <div key={note._id} className={styles.noteCard}>
             <h2
               className={styles.noteTitle}
@@ -97,6 +105,20 @@ const NoteList: React.FC = () => {
           </div>
         ))}
       </div>
+      {/* Pagination buttons */}
+      <div className={styles.pagination}>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            className={`${styles.circleBtn} ${
+              currentPage === index + 1 ? styles.active : ""
+            }`}
+            onClick={() => handlePageClick(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
       <button
         className={styles.backButton}
         onClick={() => router.push("/notes")}
@@ -107,5 +129,6 @@ const NoteList: React.FC = () => {
     </div>
   );
 };
+
 
 export default NoteList;
