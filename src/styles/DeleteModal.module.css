@@ -1,0 +1,65 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+
+
+
+
+  
+  .modalContent {
+    background: linear-gradient(110.29deg, #2C3E50 41.37%, #666666 95.32%);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  .modalContent p {
+    color: #fff;
+    max-width: 200px;
+  }
+  
+  .modalActions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .modalButtonYes {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .modalButtonNo {
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .modalButtonYes:hover {
+    background-color: #c0392b;
+  }
+  
+  .modalButtonNo:hover {
+    background-color: #27ae60;
+  }
+  

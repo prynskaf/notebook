@@ -7,12 +7,15 @@ import { IoChevronBack } from "react-icons/io5";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import TimeAgo from "react-timeago";
 import DOMPurify from 'dompurify';
+import DeleteModal from "@/components/DeleteModal"; // Import DeleteModal
 
 const NoteList: React.FC = () => {
   const { notes, loading, fetchNotes, deleteNote } = useNotesStore();
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
-  const notesPerPage = 5; // Adjust this number as needed
+  const notesPerPage = 5;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [noteToDelete, setNoteToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     fetchNotes();
@@ -26,16 +29,31 @@ const NoteList: React.FC = () => {
     router.push(`/notes/edit/${id}`);
   };
 
-  const handleDeleteClick = async (id: string) => {
-    const loadingToastId = toast.loading("Deleting...");
-    try {
-      await deleteNote(id);
-      toast.dismiss(loadingToastId);
-      toast.success("Note deleted successfully!");
-    } catch (error) {
-      toast.dismiss(loadingToastId);
-      toast.error("An error occurred while deleting the note.");
+  const openDeleteModal = (id: string) => {
+    setNoteToDelete(id);
+    setIsModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (noteToDelete) {
+      const loadingToastId = toast.loading("Deleting...");
+      try {
+        await deleteNote(noteToDelete);
+        toast.dismiss(loadingToastId);
+        toast.success("Note deleted successfully!");
+      } catch (error) {
+        toast.dismiss(loadingToastId);
+        toast.error("An error occurred while deleting the note.");
+      } finally {
+        setIsModalOpen(false);
+        setNoteToDelete(null);
+      }
     }
+  };
+
+  const cancelDelete = () => {
+    setIsModalOpen(false);
+    setNoteToDelete(null);
   };
 
   const handlePageClick = (pageNumber: number) => {
@@ -96,7 +114,7 @@ const NoteList: React.FC = () => {
                 </button>
                 <button
                   className={styles.deleteButton}
-                  onClick={() => handleDeleteClick(note._id)}
+                  onClick={() => openDeleteModal(note._id)}
                 >
                   Delete
                 </button>
@@ -126,9 +144,11 @@ const NoteList: React.FC = () => {
         <IoChevronBack style={{ fontSize: "1.5rem" }} />
         <span>Back to Management Note</span>
       </button>
+      
+      {/* Delete confirmation modal */}
+      {isModalOpen && <DeleteModal onConfirm={confirmDelete} onCancel={cancelDelete} />}
     </div>
   );
 };
-
 
 export default NoteList;
